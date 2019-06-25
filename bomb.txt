@@ -1,0 +1,227 @@
+satwik@satwik:~/Documents/Sem3/Reversing$ gdb bomb 
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from bomb...(no debugging symbols found)...done.
+(gdb) set disassembly-flavor intel
+(gdb) disass main
+Dump of assembler code for function main:
+   0x08048658 <+0>:	lea    ecx,[esp+0x4]
+   0x0804865c <+4>:	and    esp,0xfffffff0
+   0x0804865f <+7>:	push   DWORD PTR [ecx-0x4]
+   0x08048662 <+10>:	push   ebp
+   0x08048663 <+11>:	mov    ebp,esp
+   0x08048665 <+13>:	push   ecx
+   0x08048666 <+14>:	sub    esp,0x4
+   0x08048669 <+17>:	sub    esp,0xc
+   0x0804866c <+20>:	push   0x80487e9
+   0x08048671 <+25>:	call   0x80483d0 <puts@plt>
+   0x08048676 <+30>:	add    esp,0x10
+   0x08048679 <+33>:	sub    esp,0xc
+   0x0804867c <+36>:	push   0x8048803
+   0x08048681 <+41>:	call   0x80483d0 <puts@plt>
+   0x08048686 <+46>:	add    esp,0x10
+   0x08048689 <+49>:	sub    esp,0xc
+   0x0804868c <+52>:	push   0x804881b
+   0x08048691 <+57>:	call   0x80483d0 <puts@plt>
+   0x08048696 <+62>:	add    esp,0x10
+   0x08048699 <+65>:	call   0x804851b <phase1>
+   0x0804869e <+70>:	sub    esp,0xc
+   0x080486a1 <+73>:	push   0x0
+   0x080486a3 <+75>:	call   0x80483e0 <exit@plt>
+End of assembler dump.
+(gdb) disass phase1
+Dump of assembler code for function phase1:
+   0x0804851b <+0>:	push   ebp
+   0x0804851c <+1>:	mov    ebp,esp
+   0x0804851e <+3>:	sub    esp,0x18
+   0x08048521 <+6>:	mov    eax,gs:0x14
+   0x08048527 <+12>:	mov    DWORD PTR [ebp-0xc],eax
+   0x0804852a <+15>:	xor    eax,eax
+   0x0804852c <+17>:	mov    DWORD PTR [ebp-0x10],0xae0
+   0x08048533 <+24>:	sub    esp,0xc
+   0x08048536 <+27>:	push   0x8048730
+   0x0804853b <+32>:	call   0x80483d0 <puts@plt>
+   0x08048540 <+37>:	add    esp,0x10
+   0x08048543 <+40>:	sub    esp,0xc
+   0x08048546 <+43>:	push   0x804873c
+   0x0804854b <+48>:	call   0x80483b0 <printf@plt>
+   0x08048550 <+53>:	add    esp,0x10
+   0x08048553 <+56>:	sub    esp,0x8
+   0x08048556 <+59>:	lea    eax,[ebp-0x14]
+   0x08048559 <+62>:	push   eax
+   0x0804855a <+63>:	push   0x804875c
+   0x0804855f <+68>:	call   0x8048400 <__isoc99_scanf@plt>
+   0x08048564 <+73>:	add    esp,0x10
+   0x08048567 <+76>:	mov    eax,DWORD PTR [ebp-0x14]
+   0x0804856a <+79>:	cmp    eax,DWORD PTR [ebp-0x10]
+   0x0804856d <+82>:	jne    0x8048593 <phase1+120>
+   0x0804856f <+84>:	sub    esp,0xc
+   0x08048572 <+87>:	push   0x804875f
+   0x08048577 <+92>:	call   0x80483d0 <puts@plt>
+   0x0804857c <+97>:	add    esp,0x10
+   0x0804857f <+100>:	call   0x80485b4 <phase2>
+   0x08048584 <+105>:	nop
+   0x08048585 <+106>:	mov    eax,DWORD PTR [ebp-0xc]
+   0x08048588 <+109>:	xor    eax,DWORD PTR gs:0x14
+   0x0804858f <+116>:	je     0x80485b2 <phase1+151>
+   0x08048591 <+118>:	jmp    0x80485ad <phase1+146>
+   0x08048593 <+120>:	sub    esp,0xc
+   0x08048596 <+123>:	push   0x8048774
+---Type <return> to continue, or q <return> to quit---
+   0x0804859b <+128>:	call   0x80483d0 <puts@plt>
+   0x080485a0 <+133>:	add    esp,0x10
+   0x080485a3 <+136>:	sub    esp,0xc
+   0x080485a6 <+139>:	push   0x0
+   0x080485a8 <+141>:	call   0x80483e0 <exit@plt>
+   0x080485ad <+146>:	call   0x80483c0 <__stack_chk_fail@plt>
+   0x080485b2 <+151>:	leave  
+   0x080485b3 <+152>:	ret    
+End of assembler dump.
+(gdb) b *0x0804856a
+Breakpoint 1 at 0x804856a
+(gdb) p $ebp-0x10
+No registers.
+(gdb) r
+Starting program: /home/satwik/Documents/Sem3/Reversing/bomb 
+------------------------
+
+  Welcome to BOMB Labs
+
+------------------------
+Phase [1/2]
+Enter phase 1 PIN to continue: asdkbvfask
+
+Breakpoint 1, 0x0804856a in phase1 ()
+(gdb) p $ebp-0x10
+$1 = (void *) 0xffffcce8
+(gdb) p $0xffffcce8
+$2 = void
+(gdb) x/s $0xffffcce8
+Value can't be converted to integer.
+(gdb) x/s 0xffffcce8
+0xffffcce8:	"\340\n"
+(gdb) x/s &0xffffcce8
+Attempt to take address of value not located in memory.
+(gdb) x/s *0xffffcce8
+0xae0:	<error: Cannot access memory at address 0xae0>
+(gdb) x/d 0xffffcce8
+0xffffcce8:	-32
+(gdb) x/d *0xffffcce8
+0xae0:	Cannot access memory at address 0xae0
+(gdb) p/d *0xffffcce8
+$3 = 2784
+(gdb) disass phase2
+Dump of assembler code for function phase2:
+   0x080485b4 <+0>:	push   ebp
+   0x080485b5 <+1>:	mov    ebp,esp
+   0x080485b7 <+3>:	sub    esp,0x18
+   0x080485ba <+6>:	mov    eax,gs:0x14
+   0x080485c0 <+12>:	mov    DWORD PTR [ebp-0xc],eax
+   0x080485c3 <+15>:	xor    eax,eax
+   0x080485c5 <+17>:	mov    DWORD PTR [ebp-0x10],0x539
+   0x080485cc <+24>:	sub    esp,0xc
+   0x080485cf <+27>:	push   0x80487a3
+   0x080485d4 <+32>:	call   0x80483d0 <puts@plt>
+   0x080485d9 <+37>:	add    esp,0x10
+   0x080485dc <+40>:	sub    esp,0xc
+   0x080485df <+43>:	push   0x80487b0
+   0x080485e4 <+48>:	call   0x80483b0 <printf@plt>
+   0x080485e9 <+53>:	add    esp,0x10
+   0x080485ec <+56>:	sub    esp,0x8
+   0x080485ef <+59>:	lea    eax,[ebp-0x14]
+   0x080485f2 <+62>:	push   eax
+   0x080485f3 <+63>:	push   0x804875c
+   0x080485f8 <+68>:	call   0x8048400 <__isoc99_scanf@plt>
+   0x080485fd <+73>:	add    esp,0x10
+   0x08048600 <+76>:	mov    eax,DWORD PTR [ebp-0x14]
+   0x08048603 <+79>:	cmp    eax,DWORD PTR [ebp-0x10]
+   0x08048606 <+82>:	jne    0x8048637 <phase2+131>
+   0x08048608 <+84>:	sub    esp,0xc
+   0x0804860b <+87>:	push   0x80487cf
+   0x08048610 <+92>:	call   0x80483d0 <puts@plt>
+   0x08048615 <+97>:	add    esp,0x10
+   0x08048618 <+100>:	sub    esp,0xc
+   0x0804861b <+103>:	push   0x80487e0
+   0x08048620 <+108>:	call   0x80483d0 <puts@plt>
+   0x08048625 <+113>:	add    esp,0x10
+   0x08048628 <+116>:	nop
+   0x08048629 <+117>:	mov    eax,DWORD PTR [ebp-0xc]
+   0x0804862c <+120>:	xor    eax,DWORD PTR gs:0x14
+   0x08048633 <+127>:	je     0x8048656 <phase2+162>
+---Type <return> to continue, or q <return> to quit---
+   0x08048635 <+129>:	jmp    0x8048651 <phase2+157>
+   0x08048637 <+131>:	sub    esp,0xc
+   0x0804863a <+134>:	push   0x8048774
+   0x0804863f <+139>:	call   0x80483d0 <puts@plt>
+   0x08048644 <+144>:	add    esp,0x10
+   0x08048647 <+147>:	sub    esp,0xc
+   0x0804864a <+150>:	push   0x0
+   0x0804864c <+152>:	call   0x80483e0 <exit@plt>
+   0x08048651 <+157>:	call   0x80483c0 <__stack_chk_fail@plt>
+   0x08048656 <+162>:	leave  
+   0x08048657 <+163>:	ret    
+End of assembler dump.
+(gdb) b *0x08048603
+Breakpoint 2 at 0x8048603
+(gdb) del 1
+(gdb) r
+The program being debugged has been started already.
+Start it from the beginning? (y or n) y
+Starting program: /home/satwik/Documents/Sem3/Reversing/bomb 
+------------------------
+
+  Welcome to BOMB Labs
+
+------------------------
+Phase [1/2]
+Enter phase 1 PIN to continue: 2784
+Phase 1 diffused!
+
+
+Phase [2/2]
+Enter phase 2 PIN to diffuse: 2345        
+
+Breakpoint 2, 0x08048603 in phase2 ()
+(gdb) x/s $ebp-0x10
+0xffffccc8:	"9\005"
+(gdb) p $ebp-0x10
+$4 = (void *) 0xffffccc8
+(gdb) p/d *0xffffccc8
+$5 = 1337
+(gdb) 
+
+========================Answer==============================
+satwik@satwik:~/Documents/Sem3/Reversing$ ./bomb 
+------------------------
+
+  Welcome to BOMB Labs
+
+------------------------
+Phase [1/2]
+Enter phase 1 PIN to continue: 2784
+Phase 1 diffused!
+
+
+Phase [2/2]
+Enter phase 2 PIN to diffuse: 1337
+
+
+Bomb diffused!
+You win!
+
+
+
+
+

@@ -1,0 +1,126 @@
+satwik@satwik:~/Documents/Sem3/Reversing$ gdb findme
+GNU gdb (Ubuntu 8.1-0ubuntu3) 8.1.0.20180409-git
+Copyright (C) 2018 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from findme...(no debugging symbols found)...done.
+(gdb) disass main
+Dump of assembler code for function main:
+   0x080484fb <+0>:	lea    0x4(%esp),%ecx
+   0x080484ff <+4>:	and    $0xfffffff0,%esp
+   0x08048502 <+7>:	pushl  -0x4(%ecx)
+   0x08048505 <+10>:	push   %ebp
+   0x08048506 <+11>:	mov    %esp,%ebp
+   0x08048508 <+13>:	push   %ecx
+   0x08048509 <+14>:	sub    $0x24,%esp
+   0x0804850c <+17>:	mov    %gs:0x14,%eax
+   0x08048512 <+23>:	mov    %eax,-0xc(%ebp)
+   0x08048515 <+26>:	xor    %eax,%eax
+   0x08048517 <+28>:	sub    $0xc,%esp
+   0x0804851a <+31>:	push   $0x8048610
+   0x0804851f <+36>:	call   0x8048390 <printf@plt>
+   0x08048524 <+41>:	add    $0x10,%esp
+   0x08048527 <+44>:	sub    $0xc,%esp
+   0x0804852a <+47>:	push   $0x804862c
+   0x0804852f <+52>:	call   0x80483c0 <system@plt>
+   0x08048534 <+57>:	add    $0x10,%esp
+   0x08048537 <+60>:	sub    $0xc,%esp
+   0x0804853a <+63>:	lea    -0x20(%ebp),%eax
+   0x0804853d <+66>:	push   %eax
+   0x0804853e <+67>:	call   0x80483a0 <gets@plt>
+   0x08048543 <+72>:	add    $0x10,%esp
+   0x08048546 <+75>:	sub    $0x8,%esp
+   0x08048549 <+78>:	lea    -0x20(%ebp),%eax
+   0x0804854c <+81>:	push   %eax
+   0x0804854d <+82>:	push   $0x804a030
+   0x08048552 <+87>:	call   0x8048380 <strcmp@plt>
+   0x08048557 <+92>:	add    $0x10,%esp
+   0x0804855a <+95>:	test   %eax,%eax
+   0x0804855c <+97>:	jne    0x8048570 <main+117>
+   0x0804855e <+99>:	sub    $0xc,%esp
+   0x08048561 <+102>:	push   $0x8048637
+   0x08048566 <+107>:	call   0x80483b0 <puts@plt>
+   0x0804856b <+112>:	add    $0x10,%esp
+   0x0804856e <+115>:	jmp    0x8048580 <main+133>
+---Type <return> to continue, or q <return> to quit---
+   0x08048570 <+117>:	sub    $0xc,%esp
+   0x08048573 <+120>:	push   $0x8048644
+   0x08048578 <+125>:	call   0x80483b0 <puts@plt>
+   0x0804857d <+130>:	add    $0x10,%esp
+   0x08048580 <+133>:	sub    $0xc,%esp
+   0x08048583 <+136>:	push   $0x0
+   0x08048585 <+138>:	call   0x80483d0 <exit@plt>
+End of assembler dump.
+(gdb) set disassembly-flavor intel
+(gdb) disass main
+Dump of assembler code for function main:
+   0x080484fb <+0>:	lea    ecx,[esp+0x4]
+   0x080484ff <+4>:	and    esp,0xfffffff0
+   0x08048502 <+7>:	push   DWORD PTR [ecx-0x4]
+   0x08048505 <+10>:	push   ebp
+   0x08048506 <+11>:	mov    ebp,esp
+   0x08048508 <+13>:	push   ecx
+   0x08048509 <+14>:	sub    esp,0x24
+   0x0804850c <+17>:	mov    eax,gs:0x14
+   0x08048512 <+23>:	mov    DWORD PTR [ebp-0xc],eax
+   0x08048515 <+26>:	xor    eax,eax
+   0x08048517 <+28>:	sub    esp,0xc
+   0x0804851a <+31>:	push   0x8048610
+   0x0804851f <+36>:	call   0x8048390 <printf@plt>
+   0x08048524 <+41>:	add    esp,0x10
+   0x08048527 <+44>:	sub    esp,0xc
+   0x0804852a <+47>:	push   0x804862c
+   0x0804852f <+52>:	call   0x80483c0 <system@plt>
+   0x08048534 <+57>:	add    esp,0x10
+   0x08048537 <+60>:	sub    esp,0xc
+   0x0804853a <+63>:	lea    eax,[ebp-0x20]
+   0x0804853d <+66>:	push   eax
+   0x0804853e <+67>:	call   0x80483a0 <gets@plt>
+   0x08048543 <+72>:	add    esp,0x10
+   0x08048546 <+75>:	sub    esp,0x8
+   0x08048549 <+78>:	lea    eax,[ebp-0x20]
+   0x0804854c <+81>:	push   eax
+   0x0804854d <+82>:	push   0x804a030
+   0x08048552 <+87>:	call   0x8048380 <strcmp@plt>
+   0x08048557 <+92>:	add    esp,0x10
+   0x0804855a <+95>:	test   eax,eax
+   0x0804855c <+97>:	jne    0x8048570 <main+117>
+   0x0804855e <+99>:	sub    esp,0xc
+   0x08048561 <+102>:	push   0x8048637
+   0x08048566 <+107>:	call   0x80483b0 <puts@plt>
+   0x0804856b <+112>:	add    esp,0x10
+   0x0804856e <+115>:	jmp    0x8048580 <main+133>
+---Type <return> to continue, or q <return> to quit---
+   0x08048570 <+117>:	sub    esp,0xc
+   0x08048573 <+120>:	push   0x8048644
+   0x08048578 <+125>:	call   0x80483b0 <puts@plt>
+   0x0804857d <+130>:	add    esp,0x10
+   0x08048580 <+133>:	sub    esp,0xc
+   0x08048583 <+136>:	push   0x0
+   0x08048585 <+138>:	call   0x80483d0 <exit@plt>
+End of assembler dump.
+(gdb) p/d 0xfffffff0
+$1 = -16
+(gdb) x/s 0x804a030
+0x804a030 <password>:	"password123"
+(gdb) 
+
+
+
+======================Answer===================================
+satwik@satwik:~/Documents/Sem3/Reversing$ ./findme 
+Please enter the password: 
+Unlocked!
+
+
+(Answer is: password123 )
