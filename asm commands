@@ -1,0 +1,4 @@
+nasm -f elf32 Even.asm
+gcc -m32 Even.o && ./Even.out
+
+
